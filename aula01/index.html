@@ -15,9 +15,19 @@
       let ctx = canvas.getContext("2d");
       canvas.width = 480;
       canvas.height = 320;
-     
-        ctx.fillStyle = "darkgrey";
+      let x = 250;
+      desenha();
+
+      //função para desenhar
+      function desenha() {
+        //Desenha Fundo
+        ctx.fillStyle = "lightblack";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        //Desenha elementos
+        ctx.fillStyle = "darkblue";
+        ctx.fillRect(x, 150, 20, 20);
+      }
     </script>
   </body>
 </html>
