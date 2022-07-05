@@ -16,6 +16,7 @@
       canvas.width = 480;
       canvas.height = 320;
       let x = 150;
+      let y = 100;
       let t0;
       let dt;
       requestAnimationFrame(desenha);
@@ -26,16 +27,16 @@
         dt = (t - t0) / 1000;
 
         //Desenha Fundo
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "darkgray";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // atualiza estado
-
+        // atualiza estados
         x = x + (10*dt);
+        y = 100 + 1500*Math.cos(t/100)*dt;
 
         //Desenha elementos
-        ctx.fillStyle = "white";
-        ctx.fillRect(x, 150, 20, 20);
+        ctx.fillStyle = "blue";
+        ctx.fillRect(x, y, 20, 20);
 
         requestAnimationFrame(desenha);
         t0 = t;
