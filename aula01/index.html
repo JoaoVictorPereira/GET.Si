@@ -15,18 +15,30 @@
       let ctx = canvas.getContext("2d");
       canvas.width = 480;
       canvas.height = 320;
-      let x = 250;
-      desenha();
+      let x = 150;
+      let t0;
+      let dt;
+      requestAnimationFrame(desenha);
 
       //função para desenhar
-      function desenha() {
+      function desenha(t) {
+        t0 = t0 ?? t;
+        dt = (t - t0) / 1000;
+
         //Desenha Fundo
-        ctx.fillStyle = "lightblack";
+        ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+        // atualiza estado
+
+        x = x + (10*dt);
+
         //Desenha elementos
-        ctx.fillStyle = "darkblue";
+        ctx.fillStyle = "white";
         ctx.fillRect(x, 150, 20, 20);
+
+        requestAnimationFrame(desenha);
+        t0 = t;
       }
     </script>
   </body>
