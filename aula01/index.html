@@ -15,8 +15,8 @@
       let ctx = canvas.getContext("2d");
       canvas.width = 480;
       canvas.height = 320;
-      let x = 150;
-      let y = 100;
+      let x = 0;
+      let y = 250;
       let t0;
       let dt;
       requestAnimationFrame(desenha);
@@ -31,8 +31,8 @@
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // atualiza estados
-        x = x + (10*dt);
-        y = 100 + 1500*Math.cos(t/100)*dt;
+        x = x + 10 * dt;
+        y = 100 + 9500 * Math.cos(t / 100) * dt;
 
         //Desenha elementos
         ctx.fillStyle = "blue";
