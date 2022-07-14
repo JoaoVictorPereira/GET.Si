@@ -9,11 +9,9 @@ let Player = {
   y: 100,
   vy: 0,
   ay: 0,
-
-  desenhar: function () {
-    ctx.fillStyle = "blue";
-    ctx.fillRect(this.x, this.y, 20, 20);
-  },
+  cor: "blue",
+  desenhar: desenhaElementos,
+  mover: moverElementos,
 };
 
 let E = {
@@ -23,13 +21,13 @@ let E = {
   y: 200,
   vy: 0,
   ay: 0,
-  desenhar: function () {
-    ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, 20, 20);
-  },
+  cor: "red",
+  desenhar: desenhaElementos,
+  mover: moverElementos,
+  controlar: perseguirAlvo,
 };
 
-const K = 80;
+const K = 120;
 let t0;
 let dt;
 requestAnimationFrame(desenha);
@@ -45,22 +43,13 @@ function desenha(t) {
 
   //Controladores
 
-  E.ay = 0.5 * (Player.y - E.y) - 0.2 * E.vy;
-  E.ax = 0.5 * (Player.x - E.x) - 0.2 * E.vx;
+  E.controlar(Player);
 
   // atualiza dinamica dos estados
 
-  /**************************/
-  Player.vx = Player.vx + Player.ax * dt;
-  Player.x = Player.x + Player.vx * dt;
-  Player.vy = Player.vy + Player.ay * dt;
-  Player.y = Player.y + Player.vy * dt;
-  /**************************/
-  E.vx = E.vx + E.ax * dt;
-  E.x = E.x + E.vx * dt;
-  E.vy = E.vy + E.ay * dt;
-  E.y = E.y + E.vy * dt;
-  /**************************/
+  Player.mover();
+  E.mover();
+
   //Desenha elementos
 
   Player.desenhar();
@@ -68,6 +57,22 @@ function desenha(t) {
 
   requestAnimationFrame(desenha);
   t0 = t;
+}
+function perseguirAlvo(alvo) {
+  this.ay = 0.5 * (alvo.y - this.y) - 0.2 * this.vy;
+  this.ax = 0.5 * (alvo.x - this.x) - 0.2 * this.vx;
+}
+
+function desenhaElementos() {
+  ctx.fillStyle = this.cor;
+  ctx.fillRect(this.x, this.y, 20, 20);
+}
+
+function moverElementos() {
+  this.vx = this.vx + this.ax * dt;
+  this.x = this.x + this.vx * dt;
+  this.vy = this.vy + this.ay * dt;
+  this.y = this.y + this.vy * dt;
 }
 
 addEventListener("keydown", teclaPressionada);
