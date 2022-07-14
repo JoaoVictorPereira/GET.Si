@@ -9,16 +9,27 @@ let Player = {
   y: 100,
   vy: 0,
   ay: 0,
+
+  desenhar: function () {
+    ctx.fillStyle = "blue";
+    ctx.fillRect(this.x, this.y, 20, 20);
+  },
 };
 
-let x2 = 350;
-let vx2 = 0;
-let ax2 = 0;
-let y2 = 200;
-let vy2 = 0;
-let ay2 = 0;
+let E = {
+  x: 350,
+  vx: 0,
+  ax: 0,
+  y: 200,
+  vy: 0,
+  ay: 0,
+  desenhar: function () {
+    ctx.fillStyle = "red";
+    ctx.fillRect(this.x, this.y, 20, 20);
+  },
+};
 
-const K = 180;
+const K = 80;
 let t0;
 let dt;
 requestAnimationFrame(desenha);
@@ -34,8 +45,8 @@ function desenha(t) {
 
   //Controladores
 
-  ay2 = 0.5 * (Player.y - y2) - 0.2 * vy2;
-  ax2 = 0.5 * (Player.x - x2) - 0.2 * vx2;
+  E.ay = 0.5 * (Player.y - E.y) - 0.2 * E.vy;
+  E.ax = 0.5 * (Player.x - E.x) - 0.2 * E.vx;
 
   // atualiza dinamica dos estados
 
@@ -45,16 +56,15 @@ function desenha(t) {
   Player.vy = Player.vy + Player.ay * dt;
   Player.y = Player.y + Player.vy * dt;
   /**************************/
-  vx2 = vx2 + ax2 * dt;
-  x2 = x2 + vx2 * dt;
-  vy2 = vy2 + ay2 * dt;
-  y2 = y2 + vy2 * dt;
+  E.vx = E.vx + E.ax * dt;
+  E.x = E.x + E.vx * dt;
+  E.vy = E.vy + E.ay * dt;
+  E.y = E.y + E.vy * dt;
   /**************************/
   //Desenha elementos
-  ctx.fillStyle = "red";
-  ctx.fillRect(x2, y2, 20, 20);
-  ctx.fillStyle = "blue";
-  ctx.fillRect(Player.x, Player.y, 20, 20);
+
+  Player.desenhar();
+  E.desenhar();
 
   requestAnimationFrame(desenha);
   t0 = t;
@@ -63,9 +73,9 @@ function desenha(t) {
 addEventListener("keydown", teclaPressionada);
 addEventListener("keyup", teclaSolta);
 
-function teclaPressionada(e) {
-  console.log(e.key);
-  switch (e.key) {
+function teclaPressionada(event) {
+  console.log(event.key);
+  switch (event.key) {
     case "w":
       Player.ay = -K;
       break;
@@ -83,23 +93,19 @@ function teclaPressionada(e) {
       break;
   }
 }
-function teclaSolta(e) {
-  console.log(e.key);
-  switch (e.key) {
+function teclaSolta(event) {
+  console.log(event.key);
+  switch (event.key) {
     case "w":
-      Player.vy = 0;
       Player.ay = 0;
       break;
     case "s":
-      Player.vy = 0;
       Player.ay = 0;
       break;
     case "a":
-      Player.vx = 0;
       Player.ax = 0;
       break;
     case "d":
-      Player.vx = 0;
       Player.ax = 0;
       break;
 
