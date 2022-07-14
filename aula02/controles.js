@@ -4,9 +4,19 @@ canvas.width = 480;
 canvas.height = 320;
 let x = 150;
 let vx = 0;
+let ax = 0;
 let y = 100;
 let vy = 0;
-const V = 180;
+let ay = 0;
+
+let x2 = 350;
+let vx2 = 0;
+let ax2 = 0;
+let y2 = 200;
+let vy2 = 0;
+let ay2 = 0;
+
+const K = 180;
 let t0;
 let dt;
 requestAnimationFrame(desenha);
@@ -17,14 +27,30 @@ function desenha(t) {
   dt = (t - t0) / 1000;
 
   //Desenha Fundo
-  ctx.fillStyle = "darkgray";
+  ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // atualiza estados
-  x = x + vx * dt;
-  y = y + vy * dt;
+  //Controladores
 
+  ay2 = 0.5 * (y - y2) - 0.2 * vy2;
+  ax2 = 0.5 * (x - x2) - 0.2 * vx2;
+
+  // atualiza dinamica dos estados
+
+  /**************************/
+  vx = vx + ax * dt;
+  x = x + vx * dt;
+  vy = vy + ay * dt;
+  y = y + vy * dt;
+  /**************************/
+  vx2 = vx2 + ax2 * dt;
+  x2 = x2 + vx2 * dt;
+  vy2 = vy2 + ay2 * dt;
+  y2 = y2 + vy2 * dt;
+  /**************************/
   //Desenha elementos
+  ctx.fillStyle = "red";
+  ctx.fillRect(x2, y2, 20, 20);
   ctx.fillStyle = "blue";
   ctx.fillRect(x, y, 20, 20);
 
@@ -39,16 +65,16 @@ function teclaPressionada(e) {
   console.log(e.key);
   switch (e.key) {
     case "w":
-      vy = -V;
+      ay = -K;
       break;
     case "s":
-      vy = +V;
+      ay = +K;
       break;
     case "a":
-      vx = -V;
+      ax = -K;
       break;
     case "d":
-      vx = +V;
+      ax = +K;
       break;
 
     default:
@@ -60,15 +86,19 @@ function teclaSolta(e) {
   switch (e.key) {
     case "w":
       vy = 0;
+      ay = 0;
       break;
     case "s":
       vy = 0;
+      ay = 0;
       break;
     case "a":
       vx = 0;
+      ax = 0;
       break;
     case "d":
       vx = 0;
+      ax = 0;
       break;
 
     default:
