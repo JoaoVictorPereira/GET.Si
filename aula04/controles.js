@@ -19,8 +19,8 @@ const sprites = [];
 
 for (let ne = 0; ne < 20; ne++) {
   let E = {
-    x: canvas.width * Math.random(),
-    vx: 0,
+    x: canvas.width * (1 + 10 * Math.random()),
+    vx: -20,
     ax: 0,
     y: canvas.height * Math.random(),
     vy: 0,
@@ -85,8 +85,8 @@ function desenha(t) {
   t0 = t;
 }
 function perseguirAlvo(alvo) {
-  this.ay = 0.5 * (alvo.y - this.y) - 0.2 * this.vy;
-  this.ax = 0.5 * (alvo.x - this.x) - 0.2 * this.vx;
+  this.ay = 100 * Math.sign(alvo.y - this.y) - 0.2 * this.vy;
+  this.ax = 100 * Math.sign(alvo.x - this.x) - 0.2 * this.vx;
 }
 
 function desenhaElementos() {
