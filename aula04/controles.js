@@ -2,6 +2,7 @@ let canvas = document.querySelector("canvas");
 let ctx = canvas.getContext("2d");
 canvas.width = 480;
 canvas.height = 320;
+let pontos = 0;
 
 let Player = {
   x: 150,
@@ -79,7 +80,29 @@ function desenha(t) {
     sprite.mover?.();
     //Desenha elementos
     sprite.desenhar();
+
+    if (colidiram(o, sprite) && o != sprite) {
+      o.x = -1000;
+      o.y = -1000;
+      o.vx = 0;
+      o.ax = 0;
+      sprite.x = -1000;
+      sprite.vx = 100;
+      sprite.ax = 0;
+      pontos += 5;
+    }
+
+    if (colidiram(Player, sprite) && o != sprite) {
+      sprite.x = -1000;
+      sprite.vx = 100;
+      sprite.ax = 0;
+      pontos -= 3;
+    }
   }
+
+  ctx.fillStyle = "yellow";
+  ctx.font = "20px Impact";
+  ctx.fillText(pontos, 10, 30);
 
   requestAnimationFrame(desenha);
   t0 = t;
@@ -140,12 +163,23 @@ function teclaSolta(event) {
       Player.ax = 0;
       break;
     case " ":
-      o.x = Player.x;
-      o.y = Player.y;
-      o.vx = 0;
-      o.ax = 100;
+      if (o.x === -1000) {
+        o.x = Player.x;
+        o.y = Player.y;
+        o.vx = 200;
+        o.ax = 100;
+      }
 
     default:
       break;
   }
+}
+
+function colidiram(A, B) {
+  return !(
+    A.x > B.x + 20 ||
+    A.x + 20 < B.x ||
+    A.y > B.y + 20 ||
+    A.y + 20 < B.y
+  );
 }
