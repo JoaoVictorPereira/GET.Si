@@ -2,6 +2,7 @@ let canvas = document.querySelector("canvas");
 let ctx = canvas.getContext("2d");
 canvas.width = 480;
 canvas.height = 320;
+
 let Player = {
   x: 150,
   vx: 0,
@@ -9,7 +10,7 @@ let Player = {
   y: 100,
   vy: 0,
   ay: 0,
-  cor: "blue",
+  cor: "white",
   desenhar: desenhaElementos,
   mover: moverElementos,
 };
@@ -32,6 +33,26 @@ for (let ne = 0; ne < 20; ne++) {
   sprites.push(E);
 }
 
+let o = {
+  x: -1000,
+  vx: 0,
+  ax: 0,
+  y: 150,
+  vy: 0,
+  ay: 0,
+  cor: "blue",
+  desenhar: desenhaElementos,
+  mover: moverElementos,
+  controlar: function () {
+    if (this.x > canvas.width + 60) {
+      this.x = -1000;
+      this.ax = 0;
+      this.vx = 0;
+    }
+  },
+};
+sprites.push(o);
+
 const K = 120;
 let t0;
 let dt;
@@ -53,9 +74,9 @@ function desenha(t) {
     const sprite = sprites[s];
 
     //Controladores
-    sprite.controlar(Player);
+    sprite.controlar?.(Player);
     // atualiza dinamica dos estados
-    sprite.mover();
+    sprite.mover?.();
     //Desenha elementos
     sprite.desenhar();
   }
@@ -118,6 +139,11 @@ function teclaSolta(event) {
     case "d":
       Player.ax = 0;
       break;
+    case " ":
+      o.x = Player.x;
+      o.y = Player.y;
+      o.vx = 0;
+      o.ax = 100;
 
     default:
       break;
