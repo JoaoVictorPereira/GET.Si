@@ -18,7 +18,7 @@ let Player = {
 
 const sprites = [];
 
-for (let ne = 0; ne < 20; ne++) {
+for (let ne = 0; ne < 10; ne++) {
   let E = {
     x: canvas.width * (1 + 10 * Math.random()),
     vx: -20,
